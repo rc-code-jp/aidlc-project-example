@@ -1,7 +1,7 @@
 # Performance Test Instructions
 
 ## Purpose
-初期版の体感性能を確認する。厳密な SLA は未設定のため、参考確認を行う。
+UI 改善後も体感性能が大きく悪化していないことを確認する。厳密な SLA は未設定のため、参考確認を行う。
 
 ## Performance Requirements
 - **Response Time**: Gemini 応答込みで数秒を許容
@@ -31,6 +31,8 @@ echo "Upload several images sequentially and record approximate response times."
 ### 2. Analyze Results
 - 連続操作で UI が固まらないこと
 - ローディング表示が維持されること
+- プレビュー表示が即座に反映されること
+- ドラッグアンドドロップ領域の描画が遅くないこと
 - エラー時に復帰できること
 
 ## Performance Optimization

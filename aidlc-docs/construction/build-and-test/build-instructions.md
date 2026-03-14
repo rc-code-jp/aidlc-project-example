@@ -28,9 +28,9 @@ npm run build
 ```
 
 ### 4. Verify Build Success
-- **Expected Output**: Next.js build complete の表示
+- **Expected Output**: `Compiled successfully` と Route Summary の表示
 - **Build Artifacts**: `.next/` ディレクトリ
-- **Common Warnings**: Node.js バージョン差異や依存更新通知は、ビルド失敗でなければ許容
+- **Common Warnings**: 初回ビルド時に Next.js が `tsconfig.json` の `include` へ `.next/types/**/*.ts` を追加することがある
 
 ## Troubleshooting
 
@@ -47,3 +47,11 @@ npm run build
   1. `.env.local` を作成
   2. `GEMINI_API_KEY` を設定
   3. 再度 `npm run build` を実行
+
+## Latest Verification
+- **Executed On**: 2026-03-14T13:39:39Z
+- **Result**: Success
+- **Notes**:
+  - `npm run build` は成功
+  - Route Summary では `/` と `/api/analyze` が生成された
+  - `tsconfig.json` に `.next/types/**/*.ts` が追記された

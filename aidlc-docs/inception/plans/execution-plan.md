@@ -2,17 +2,28 @@
 
 ## Detailed Analysis Summary
 
-### Transformation Scope
-- **Transformation Type**: Greenfield Web Application
-- **Primary Changes**: 画像アップロード UI、サーバー側判定 API、Gemini 連携、結果表示
-- **Related Components**: フロントエンド画面、サーバー API、AI クライアント層、設定管理
+### Transformation Scope (Brownfield Only)
+- **Transformation Type**: Single component UI enhancement
+- **Primary Changes**: `src/app/page.tsx` と `src/app/globals.css` を中心に、トップページのアップロード体験、状態表示、結果表示を改善する
+- **Related Components**:
+  - `src/app/page.tsx`
+  - `src/app/globals.css`
+  - `tests/page.test.tsx`
+  - 必要に応じて `src/app/layout.tsx`
 
 ### Change Impact Assessment
-- **User-facing changes**: Yes - 単一ページの画像判定 UI を新規提供
-- **Structural changes**: Yes - フロントエンドとサーバー API を分離した最小構成が必要
-- **Data model changes**: No - 永続化データモデルは初期版では不要
-- **API changes**: Yes - 画像を受け取り Gemini 判定結果を返す API が必要
-- **NFR impact**: Yes - API キー保護、エラーハンドリング、ローカル実行性が重要
+- **User-facing changes**: Yes - アップロード導線、視覚印象、結果表示、エラーとローディングの見え方を直接変更する
+- **Structural changes**: No - 既存の Next.js、Route Handler、Gemini 連携構造は維持する
+- **Data model changes**: No - データ構造や永続化は変更しない
+- **API changes**: No - `/api/analyze` の契約は維持する
+- **NFR impact**: Yes - UX、アクセシビリティ、回帰テスト範囲に影響する
+
+### Component Relationships (Brownfield Only)
+- **Primary Component**: `src/app/page.tsx`
+- **Infrastructure Components**: なし
+- **Shared Components**: `src/types/analysis.ts`
+- **Dependent Components**: `tests/page.test.tsx`
+- **Supporting Components**: `src/app/globals.css`, `src/app/layout.tsx`
 
 ### Risk Assessment
 - **Risk Level**: Medium
@@ -23,135 +34,137 @@
 
 ```mermaid
 flowchart TD
-    Start([User Request])
+    Start(["User_Request"])
 
-    subgraph INCEPTION[INCEPTION PHASE]
-        WD[Workspace Detection<br/>COMPLETED]
-        RE[Reverse Engineering<br/>SKIP]
-        RA[Requirements Analysis<br/>COMPLETED]
-        US[User Stories<br/>COMPLETED]
-        WP[Workflow Planning<br/>COMPLETED]
-        AD[Application Design<br/>EXECUTE]
-        UG[Units Generation<br/>SKIP]
+    subgraph INCEPTION["INCEPTION_PHASE"]
+        WD["Workspace_Detection<br/><b>COMPLETED</b>"]
+        RE["Reverse_Engineering<br/><b>COMPLETED</b>"]
+        RA["Requirements_Analysis<br/><b>COMPLETED</b>"]
+        US["User_Stories<br/><b>COMPLETED</b>"]
+        WP["Workflow_Planning<br/><b>COMPLETED</b>"]
+        AD["Application_Design<br/><b>SKIP</b>"]
+        UG["Units_Generation<br/><b>SKIP</b>"]
     end
 
-    subgraph CONSTRUCTION[CONSTRUCTION PHASE]
-        FD[Functional Design<br/>SKIP]
-        NFRA[NFR Requirements<br/>EXECUTE]
-        NFRD[NFR Design<br/>EXECUTE]
-        ID[Infrastructure Design<br/>SKIP]
-        CP[Code Planning<br/>EXECUTE]
-        CG[Code Generation<br/>EXECUTE]
-        BT[Build and Test<br/>EXECUTE]
+    subgraph CONSTRUCTION["CONSTRUCTION_PHASE"]
+        FD["Functional_Design<br/><b>SKIP</b>"]
+        NFRA["NFR_Requirements<br/><b>SKIP</b>"]
+        NFRD["NFR_Design<br/><b>SKIP</b>"]
+        ID["Infrastructure_Design<br/><b>SKIP</b>"]
+        CP["Code_Planning<br/><b>EXECUTE</b>"]
+        CG["Code_Generation<br/><b>EXECUTE</b>"]
+        BT["Build_and_Test<br/><b>EXECUTE</b>"]
     end
 
-    subgraph OPERATIONS[OPERATIONS PHASE]
-        OPS[Operations<br/>PLACEHOLDER]
+    subgraph OPERATIONS["OPERATIONS_PHASE"]
+        OPS["Operations<br/><b>PLACEHOLDER</b>"]
     end
 
     Start --> WD
-    WD --> RA
+    WD --> RE
+    RE --> RA
     RA --> US
     US --> WP
-    WP --> AD
-    WP --> NFRA
-    AD --> CP
-    NFRA --> NFRD
-    NFRD --> CP
+    WP --> CP
     CP --> CG
     CG --> BT
-    BT --> End([Complete])
+    BT --> End(["Complete"])
 
     style WD fill:#4CAF50,stroke:#1B5E20,stroke-width:3px,color:#fff
+    style RE fill:#4CAF50,stroke:#1B5E20,stroke-width:3px,color:#fff
     style RA fill:#4CAF50,stroke:#1B5E20,stroke-width:3px,color:#fff
     style US fill:#4CAF50,stroke:#1B5E20,stroke-width:3px,color:#fff
     style WP fill:#4CAF50,stroke:#1B5E20,stroke-width:3px,color:#fff
     style CP fill:#4CAF50,stroke:#1B5E20,stroke-width:3px,color:#fff
     style CG fill:#4CAF50,stroke:#1B5E20,stroke-width:3px,color:#fff
     style BT fill:#4CAF50,stroke:#1B5E20,stroke-width:3px,color:#fff
-    style AD fill:#FFA726,stroke:#E65100,stroke-width:3px,stroke-dasharray: 5 5,color:#000
-    style NFRA fill:#FFA726,stroke:#E65100,stroke-width:3px,stroke-dasharray: 5 5,color:#000
-    style NFRD fill:#FFA726,stroke:#E65100,stroke-width:3px,stroke-dasharray: 5 5,color:#000
-    style RE fill:#BDBDBD,stroke:#424242,stroke-width:2px,stroke-dasharray: 5 5,color:#000
+    style AD fill:#BDBDBD,stroke:#424242,stroke-width:2px,stroke-dasharray: 5 5,color:#000
     style UG fill:#BDBDBD,stroke:#424242,stroke-width:2px,stroke-dasharray: 5 5,color:#000
     style FD fill:#BDBDBD,stroke:#424242,stroke-width:2px,stroke-dasharray: 5 5,color:#000
+    style NFRA fill:#BDBDBD,stroke:#424242,stroke-width:2px,stroke-dasharray: 5 5,color:#000
+    style NFRD fill:#BDBDBD,stroke:#424242,stroke-width:2px,stroke-dasharray: 5 5,color:#000
     style ID fill:#BDBDBD,stroke:#424242,stroke-width:2px,stroke-dasharray: 5 5,color:#000
     style OPS fill:#BDBDBD,stroke:#424242,stroke-width:2px,stroke-dasharray: 5 5,color:#000
-    style Start fill:#CE93D8,stroke:#6A1B9A,stroke-width:3px,color:#000
-    style End fill:#CE93D8,stroke:#6A1B9A,stroke-width:3px,color:#000
     style INCEPTION fill:#BBDEFB,stroke:#1565C0,stroke-width:3px,color:#000
     style CONSTRUCTION fill:#C8E6C9,stroke:#2E7D32,stroke-width:3px,color:#000
     style OPERATIONS fill:#FFF59D,stroke:#F57F17,stroke-width:3px,color:#000
+    style Start fill:#CE93D8,stroke:#6A1B9A,stroke-width:3px,color:#000
+    style End fill:#CE93D8,stroke:#6A1B9A,stroke-width:3px,color:#000
 
     linkStyle default stroke:#333,stroke-width:2px
 ```
 
 ### Text Alternative
-```text
-INCEPTION:
 - Workspace Detection: COMPLETED
-- Reverse Engineering: SKIP
+- Reverse Engineering: COMPLETED
 - Requirements Analysis: COMPLETED
 - User Stories: COMPLETED
 - Workflow Planning: COMPLETED
-- Application Design: EXECUTE
+- Application Design: SKIP
 - Units Generation: SKIP
-
-CONSTRUCTION:
 - Functional Design: SKIP
-- NFR Requirements: EXECUTE
-- NFR Design: EXECUTE
+- NFR Requirements: SKIP
+- NFR Design: SKIP
 - Infrastructure Design: SKIP
 - Code Planning: EXECUTE
 - Code Generation: EXECUTE
 - Build and Test: EXECUTE
 
-OPERATIONS:
-- Operations: PLACEHOLDER
-```
-
 ## Phases to Execute
 
 ### 🔵 INCEPTION PHASE
 - [x] Workspace Detection (COMPLETED)
-- [x] Reverse Engineering (SKIPPED)
+- [x] Reverse Engineering (COMPLETED)
 - [x] Requirements Elaboration (COMPLETED)
 - [x] User Stories (COMPLETED)
-- [x] Execution Plan (COMPLETED)
-- [ ] Application Design - EXECUTE
-  - **Rationale**: フロントエンド、サーバー API、Gemini 連携の責務分割を明確にする必要がある
+- [x] Execution Plan (IN PROGRESS)
+- [ ] Application Design - SKIP
+  - **Rationale**: 新規コンポーネントやサービス設計は不要で、変更は既存トップページの境界内に収まる
+- [ ] Units Planning - SKIP
+  - **Rationale**: 単一コンポーネント中心の変更で、分割による効果が低い
 - [ ] Units Generation - SKIP
-  - **Rationale**: 初期版は単一アプリケーションとして扱え、複数ユニットへの分割効果が小さい
+  - **Rationale**: 実装単位を分けるほどの複雑さがない
 
 ### 🟢 CONSTRUCTION PHASE
 - [ ] Functional Design - SKIP
-  - **Rationale**: 新規の複雑な業務データモデルはなく、後続の Application Design と Code Planning で十分整理できる
-- [ ] NFR Requirements - EXECUTE
-  - **Rationale**: API キー保護、AI API エラー処理、ローカル実行要件を明文化する必要がある
-- [ ] NFR Design - EXECUTE
-  - **Rationale**: セキュアなキー管理と責務分離を設計へ落とし込む必要がある
+  - **Rationale**: 新規ドメインロジックや複雑な業務ルールがない
+- [ ] NFR Requirements - SKIP
+  - **Rationale**: NFR は既存成果物で十分に定義済みで、今回の変更はそれらの UI 反映が中心
+- [ ] NFR Design - SKIP
+  - **Rationale**: 既存のローディング、再試行、アクセシビリティ方針を再利用できる
 - [ ] Infrastructure Design - SKIP
-  - **Rationale**: 初期リリースはローカル実行前提で、クラウド資源定義はまだ不要
+  - **Rationale**: インフラやデプロイ構成の変更がない
 - [ ] Code Planning - EXECUTE (ALWAYS)
-  - **Rationale**: 実装順序と生成対象を明確にする
+  - **Rationale**: UI 改善の実装順序、テスト追加、責務分割の要否を整理する必要がある
 - [ ] Code Generation - EXECUTE (ALWAYS)
-  - **Rationale**: Web アプリ本体とテスト実装が必要
+  - **Rationale**: トップページ UI、スタイル、テストを実装更新する
 - [ ] Build and Test - EXECUTE (ALWAYS)
-  - **Rationale**: ローカル起動確認とテスト手順の整備が必要
+  - **Rationale**: UI 回帰を含めた検証が必要
 
 ### 🟡 OPERATIONS PHASE
 - [ ] Operations - PLACEHOLDER
-  - **Rationale**: 将来の展開フェーズ用
+  - **Rationale**: 今回の変更対象外
 
-## Package Change Sequence
-- Greenfield のため既存パッケージ更新シーケンスはなし
+## Package Change Sequence (Brownfield Only)
+- 1. `src/app/page.tsx` の UI 体験を改善する
+- 2. `src/app/globals.css` で新しいビジュアルとレスポンシブスタイルを実装する
+- 3. `tests/page.test.tsx` を拡張してプレビュー、状態表示、結果導線の回帰を確認する
+- 4. 必要に応じて `src/app/layout.tsx` のメタデータを調整する
 
 ## Estimated Timeline
-- **Total Phases**: 6
-- **Estimated Duration**: 中程度
+- **Total Phases**: 3
+- **Estimated Duration**: 同一セッション内で実装と検証まで進行可能
 
 ## Success Criteria
-- **Primary Goal**: ユーザーが画像をアップロードし、犬らしさのパーセントと判定ラベルを確認できるローカル動作可能な Web アプリを実装する
+- **Primary Goal**: MVP 感の強いトップページを、見た目と体験の両面で改善する
+- **Key Deliverables**:
+  - 画像プレビュー付きドラッグアンドドロップ UI
+  - 視覚的に強化された結果表示
+  - 改善後 UI を支えるテスト更新
+- **Quality Gates**:
+  - モバイルとデスクトップで破綻しない
+  - 既存 API 契約を壊さない
+  - テストで主要 UI 状態を確認できる
 
 ## Extension Compliance Summary
 - **No detected extensions**: N/A
