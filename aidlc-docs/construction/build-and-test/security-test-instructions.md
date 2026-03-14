@@ -8,12 +8,13 @@ API キー保護と入力検証の基本確認を行う。
 - 非画像ファイル拒否
 - 5MB 超ファイル拒否
 - エラー時の内部情報非露出
+- クライアント UI へ秘密値が混入していないこと
 
 ## Checks
 
 ### 1. Environment Variable Protection
 ```bash
-rg "GEMINI_API_KEY" app src
+rg "GEMINI_API_KEY" src
 ```
 
 期待結果:
