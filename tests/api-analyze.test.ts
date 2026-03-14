@@ -1,24 +1,38 @@
 import { describe, expect, it, vi } from "vitest";
-import { POST } from "@/../app/api/analyze/route";
-import * as analyzeModule from "@/lib/analyze-image";
+import { POST } from "@/app/api/analyze/route";
+import * as analyzeImage from "@/lib/analyze-image";
+
+vi.mock("@/lib/analyze-image", async () => {
+  const actual = await vi.importActual<typeof import("@/lib/analyze-image")>("@/lib/analyze-image");
+
+  return {
+    ...actual,
+    analyzeDogPresence: vi.fn()
+  };
+});
 
 describe("POST /api/analyze", () => {
   it("分析結果を返す", async () => {
-    vi.spyOn(analyzeModule, "analyzeDogPresence").mockResolvedValueOnce({
+    vi.mocked(analyzeImage.analyzeDogPresence).mockResolvedValueOnce({
       percentage: 88,
       label: "犬っぽい",
       reason: "ぬいぐるみのように見える"
     });
 
-    const formData = new FormData();
-    formData.append("image", new File(["test"], "dog.png", { type: "image/png" }));
+    const imageFile = {
+      type: "image/png",
+      size: 4,
+      arrayBuffer: async () => new TextEncoder().encode("test").buffer
+    } as File;
+    const formData = {
+      get: (key: string) => (key === "image" ? imageFile : null)
+    } as FormData;
 
-    const response = await POST(
-      new Request("http://localhost/api/analyze", {
-        method: "POST",
-        body: formData
-      })
-    );
+    const request = {
+      formData: async () => formData
+    } as Request;
+
+    const response = await POST(request);
 
     expect(response.status).toBe(200);
     await expect(response.json()).resolves.toEqual({

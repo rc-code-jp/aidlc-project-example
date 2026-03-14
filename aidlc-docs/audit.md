@@ -287,3 +287,19 @@
 **Context**: コミット前整理と push 実行の承認記録。
 
 ---
+
+## Interaction
+**Timestamp**: 2026-03-14T09:32:11Z
+**User Input**: "nextjsは実装をSRCディレクトリに入れてください。nextconfigの設定変更です。"
+**AI Response**: "Next.js は `src/app` を設定不要で自動認識するため、`app/` 配下の実装を `src/app/` へ移動し、テストの import を `@/app/page` に更新。`next.config.ts` は既存設定を維持。"
+**Context**: Next.js 実装配置変更依頼への対応。
+
+---
+
+## Interaction
+**Timestamp**: 2026-03-14T09:36:28Z
+**User Input**: "$git-push-branch"
+**AI Response**: "Next.js 実装の `src/app` 移設とテスト・設定更新の差分を確認し、コミットと push を開始。"
+**Context**: git-push-branch スキル再実行の記録。
+
+---

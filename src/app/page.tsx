@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { ChangeEvent, useState } from "react";
 import { AnalysisResponse } from "@/types/analysis";
 

@@ -1,6 +1,11 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
-import HomePage from "@/../app/page";
+import React from "react";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it } from "vitest";
+import HomePage from "@/app/page";
+
+afterEach(() => {
+  cleanup();
+});
 
 describe("HomePage", () => {
   it("初期状態で案内文を表示する", () => {
