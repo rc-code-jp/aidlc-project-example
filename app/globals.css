@@ -1,0 +1,136 @@
+:root {
+  color-scheme: light;
+  --bg: #f4efe7;
+  --card: rgba(255, 251, 245, 0.92);
+  --ink: #1f1711;
+  --muted: #6d5f56;
+  --accent: #d26a2f;
+  --accent-dark: #8c3c13;
+  --border: rgba(90, 61, 41, 0.16);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  font-family: "Hiragino Sans", "Noto Sans JP", sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(210, 106, 47, 0.18), transparent 30%),
+    linear-gradient(135deg, #f8f3ed 0%, #efe1d0 100%);
+  color: var(--ink);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.page-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.hero-card {
+  width: min(100%, 680px);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  padding: 32px;
+  box-shadow: 0 24px 70px rgba(80, 52, 32, 0.12);
+  backdrop-filter: blur(10px);
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  letter-spacing: 0.18em;
+  font-size: 12px;
+  color: var(--accent-dark);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1.05;
+}
+
+.lead {
+  margin: 14px 0 28px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.upload-field {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+input[type="file"] {
+  display: block;
+  width: 100%;
+  margin-bottom: 18px;
+  padding: 14px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+button {
+  border: 0;
+  border-radius: 999px;
+  padding: 14px 22px;
+  background: linear-gradient(135deg, var(--accent) 0%, #f09f57 100%);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.status-panel {
+  margin-top: 22px;
+  min-height: 120px;
+  padding: 20px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--border);
+}
+
+.result-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.result-label {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.result-reason {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.error-text {
+  color: #b42318;
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .hero-card {
+    padding: 24px;
+    border-radius: 20px;
+  }
+}
