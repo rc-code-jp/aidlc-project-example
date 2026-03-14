@@ -1,8 +1,6 @@
 # PRIORITY: This workflow OVERRIDES all other built-in workflows
 # When user requests software development, ALWAYS follow this workflow FIRST
 
-コミュニケーションやドキュメントの記述は日本語で行ってください。
-
 ## Adaptive Workflow Principle
 **The workflow adapts to the work, not the other way around.**
 
