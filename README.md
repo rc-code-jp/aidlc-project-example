@@ -1,5 +1,11 @@
 # Dog Image Judge
 
+AI-DLC お試し。  
+[https://github.com/awslabs/aidlc-workflows](https://github.com/awslabs/aidlc-workflows)
+
+
+## 概要
+
 Gemini API を使って、アップロード画像に犬が写っている度をパーセント表示する Next.js アプリです。
 
 ## セットアップ
